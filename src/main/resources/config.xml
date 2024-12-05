@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:aop = "http://www.springframework.org/schema/aop"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/aop
+   		http://www.springframework.org/schema/aop/spring-aop.xsd
+        "
+
+>
+    <context:property-placeholder location="project.properties"/>
+    <bean id="coords" class="ru.springTest.shapeDraw.Coords" scope="prototype"/>
+
+    <bean id="point" class="ru.springTest.shapeDraw.Point" scope="prototype">
+        <constructor-arg ref="coords"/>
+        <property name="color" value="${point1.color}"/>
+        <property name="x" value="${point1.x}"/>
+        <property name="y" value="${point1.y}"/>
+    </bean>
+    <bean id="cirlce" class="ru.springTest.shapeDraw.Cirlce" scope="prototype">
+        <constructor-arg ref="coords"/>
+        <constructor-arg value="${circle1.radius}"/>
+        <property name="color" value="${circle1.color}"/>
+        <property name="x" value="${circle1.x}"/>
+        <property name="y" value="${circle1.y}"/>
+    </bean>
+
+    <bean id="scene" class="ru.springTest.shapeDraw.Scene" lazy-init="true" scope="singleton" autowire="constructor">
+        <property name="objects">
+            <list>
+                <ref bean="point"/>
+                <ref bean="cirlce"/>
+                <bean id="point" class="ru.springTest.shapeDraw.Point" scope="prototype">
+                    <constructor-arg ref="coords"/>
+                    <property name="color" value="${point2.color}"/>
+                    <property name="x" value="${point2.x}"/>
+                    <property name="y" value="${point2.y}"/>
+                </bean>
+                <bean id="point" class="ru.springTest.shapeDraw.Point" scope="prototype">
+                    <constructor-arg ref="coords"/>
+                    <property name="color" value="${point3.color}"/>
+                    <property name="x" value="${point3.x}"/>
+                    <property name="y" value="${point3.y}"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>
